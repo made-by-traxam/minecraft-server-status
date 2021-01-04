@@ -98,10 +98,9 @@ public class StatusMessageFormatter {
     }
 
     /**
-     * Checks whether a given message is formatted like a status message. You should also check whether the message was
-     * sent by this bot.
+     * Checks whether a given message is a status message.
      * @param message the message to check.
-     * @return true if the message is a status message.
+     * @return {@code true} if the message is a status message.
      */
     public static boolean isStatusMessage(Message message) {
         // this can't be a status message if it wasn't written by us
