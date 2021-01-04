@@ -12,7 +12,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * The
+ * Refreshes a server status embed when someone reacts with the {@link #REFRESH_EMOJI refresh emoji} to it.
  * @author traxam
  */
 @Slf4j
@@ -31,19 +31,13 @@ public class ReactionTrigger extends ListenerAdapter {
 
     @Override
     public void onMessageReactionAdd(@NotNull MessageReactionAddEvent event) {
-        log.warn(event.getReactionEmote().getAsCodepoints() + event.getReactionEmote().getAsReactionCode() + event.getReactionEmote().getEmoji());
         if (isRefreshEmoji(event.getReactionEmote())) {
             event.retrieveMessage().queue(message -> {
-                if (isServerStatusMessage(message)) {
+                if (StatusMessageFormatter.isStatusMessage(message)) {
                     refreshServerStatus(message);
                 }
             });
         }
-    }
-
-    private boolean isServerStatusMessage(Message message) {
-        return message.getAuthor().equals(message.getJDA().getSelfUser())
-                && !message.getEmbeds().isEmpty(); //TODO this is not accurate! the bot also sends embedded messages that do not describe a server status
     }
 
     private void refreshServerStatus(Message message) {

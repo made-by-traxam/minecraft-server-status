@@ -2,6 +2,7 @@ package am.trax.discord.minecraft.message;
 
 import am.trax.discord.minecraft.ping.ServerStatus;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 
 import java.awt.*;
@@ -12,6 +13,7 @@ import java.util.List;
  * @author traxam
  */
 public class StatusMessageFormatter {
+    private static final String FOOTER = "Status last updated";
     private static final Color ONLINE_COLOR = new Color(46, 204, 113);
     private static final Color OFFLINE_COLOR = new Color(231, 76, 60);
     private static final String INFINITY_SIGN = "\u221E";
@@ -38,7 +40,7 @@ public class StatusMessageFormatter {
                 .addField("Online players", formatOnlinePlayers(), true)
                 .addField("Ping", formatPing(), true)
                 .setTimestamp(status.getTimestamp())
-                .setFooter("Last updated")
+                .setFooter(FOOTER)
                 .setColor(getEmbedColor())
                 .setThumbnail(getIconUrl())
                 .build();
@@ -93,5 +95,32 @@ public class StatusMessageFormatter {
             // image is copyrighted by Mojang Studios
             return "https://static.wikia.nocookie.net/minecraft_gamepedia/images/f/f2/Unknown_server.png/revision/latest?cb=20200929054425&format=original";
         }
+    }
+
+    /**
+     * Checks whether a given message is formatted like a status message. You should also check whether the message was
+     * sent by this bot.
+     * @param message the message to check.
+     * @return true if the message is a status message.
+     */
+    public static boolean isStatusMessage(Message message) {
+        // this can't be a status message if it wasn't written by us
+        if (!message.getAuthor().equals(message.getJDA().getSelfUser())) {
+            return false;
+        }
+
+        // our status messages only contain one embed
+        if (message.getEmbeds().size() != 1) {
+            return false;
+        }
+
+        // our status messages have a text footer
+        MessageEmbed.Footer footer = message.getEmbeds().get(0).getFooter();
+        if (footer == null || footer.getText() == null) {
+            return false;
+        }
+
+        // only status embeds use the FOOTER
+        return footer.getText().equals(FOOTER);
     }
 }
