@@ -66,7 +66,7 @@ public class ServerStatus {
         if (!isOnline) {
             throw new IllegalStateException("can not get the amount of players of an offline server!");
         } else {
-            return ping.getPlayers().getMax();
+            return ping.getPlayers().getOnline();
         }
     }
 
