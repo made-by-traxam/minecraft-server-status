@@ -45,11 +45,17 @@ public class StatusCommand extends Command {
     }
 
     private MessageEmbed createStatusEmbed(String address, MCPingResponse ping) {
+        String onlinePlayersString = ping.getPlayers().getSample() == null || ping.getPlayers().getSample().isEmpty()
+                ? "-"
+                : ping.getPlayers().getSample().stream()
+                    .map(MCPingResponse.Player::getName)
+                    .collect(Collectors.joining("\n"));
+
         return new EmbedBuilder()
                 .setTitle(address)
-                .setDescription(ping.getDescription().getStrippedText())
+                .setDescription("```" + ping.getDescription().getStrippedText() + "```")
                 .addField("Players", String.format("%d / %d", ping.getPlayers().getOnline(), ping.getPlayers().getMax()), true)
-                .addField("Online players", ping.getPlayers().getSample().stream().map(MCPingResponse.Player::getName).collect(Collectors.joining(", ")), true)
+                .addField("Online players", onlinePlayersString, true)
                 .addField("Ping", String.format("%dms", ping.getPing()), true)
                 .setTimestamp(Instant.now())
                 .setFooter("Last updated")
