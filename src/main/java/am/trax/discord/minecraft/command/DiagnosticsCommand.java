@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.entities.MessageEmbed;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.Locale;
 
 /**
  * The diagnostics command responds with some measurements about the bot.
@@ -19,6 +20,7 @@ public class DiagnosticsCommand extends Command {
         this.name = "diagnostics";
         this.help = "responds with the bots latency";
         this.guildOnly = false;
+        this.hidden = true;
     }
 
     @Override
@@ -50,6 +52,9 @@ public class DiagnosticsCommand extends Command {
                                                 long usedMemory) {
         double totalMemoryMebiBytes = ((double) totalMemory) / MEBIBYTE;
         double usedMemoryMebiBytes = ((double) usedMemory) / MEBIBYTE;
+
+        double usedMemoryPercentage = (usedMemoryMebiBytes / totalMemoryMebiBytes) * 100;
+
         return new EmbedBuilder()
                 .setTitle("Diagnostics")
                 .addField("Time-to-response", String.format("%dms", timeToResponse), true)
@@ -57,7 +62,7 @@ public class DiagnosticsCommand extends Command {
                 .addField("API ping", String.format("%dms", restPing), true)
                 .addField("Amount of servers", String.format("%d", guildCount), true)
                 .addField("Amount of cached users", String.format("%d", cachedUserCount), true)
-                .addField("JVM memory", String.format("%.3f / %.3f MiB", usedMemoryMebiBytes, totalMemoryMebiBytes), true)
+                .addField("JVM memory", String.format(Locale.ENGLISH, "%.1f / %.1f MiB (%.1f%%)", usedMemoryMebiBytes, totalMemoryMebiBytes, usedMemoryPercentage), true)
                 .setTimestamp(Instant.now())
                 .build();
     }
