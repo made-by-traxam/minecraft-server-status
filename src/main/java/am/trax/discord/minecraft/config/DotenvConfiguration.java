@@ -18,7 +18,9 @@ public class DotenvConfiguration implements Configuration {
      * Initializes a new configuration that reads from dotenv.
      */
     public DotenvConfiguration() {
-        dotenv = Dotenv.load();
+        dotenv = Dotenv.configure()
+                .ignoreIfMissing()
+                .load();
     }
 
     @Override
