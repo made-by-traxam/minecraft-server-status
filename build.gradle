@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'application'
+    id 'com.github.johnrengelman.shadow' version '6.1.0'
 }
 
 group 'am.trax'
@@ -8,18 +9,30 @@ version '1.0-SNAPSHOT'
 
 mainClassName = 'am.trax.discord.minecraft.Main'
 
+jar {
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
+}
+
+sourceCompatibility = 11
+targetCompatibility = 11
+
 repositories {
     mavenCentral()
     jcenter()
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-    compile group: 'io.github.cdimascio', name: 'dotenv-java', version: '2.2.0'
-    compile group: 'net.dv8tion', name: 'JDA', version: '4.2.0_225'
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
+    implementation group: 'io.github.cdimascio', name: 'dotenv-java', version: '2.2.0'
+    implementation group: 'net.dv8tion', name: 'JDA', version: '4.2.0_225'
     implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.16'
     annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.16'
-    compile group: 'com.jagrosh', name: 'jda-utilities', version: '3.0.5'
-    compile project('MCServerPing')
+    implementation group: 'com.jagrosh', name: 'jda-utilities', version: '3.0.5'
+    implementation project('MCServerPing')
 }
+
+task stage(dependsOn: ['build', 'clean'])
+build.mustRunAfter clean
