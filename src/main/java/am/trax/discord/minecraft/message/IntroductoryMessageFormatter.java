@@ -23,8 +23,8 @@ public class IntroductoryMessageFormatter {
                 .setDescription("I can show you the online status and more information about your favourite " +
                         "minecraft servers.")
                 .addField("Try me out by sending the following message:",
-                        "```\n+status hypixel.net\n```" +
-                                "or send `+commands` for a complete commands list.",
+                        "```\nmc-status hypixel.net\n```" +
+                                "or send `mc-commands` for a complete commands list.",
                         false)
                 .setFooter("made by traxam in twenty-twenty-one",
                         "https://assets.gitlab-static.net/uploads/-/system/user/avatar/547248/avatar.png")

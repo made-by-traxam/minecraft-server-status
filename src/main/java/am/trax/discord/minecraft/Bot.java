@@ -44,7 +44,7 @@ public class Bot {
     private CommandClient buildCommandClient() {
         return new CommandClientBuilder()
                 .setActivity(Activity.watching("minecraft servers"))
-                .setPrefix("+")
+                .setPrefix("mc-")
                 .setHelpWord("commands")
                 .setOwnerId(config.getOwnerId())
                 .addCommand(new DiagnosticsCommand())

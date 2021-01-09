@@ -26,7 +26,7 @@ public class StatusCommand extends Command {
     @Override
     protected void execute(CommandEvent event) {
         if (event.getArgs().isBlank()) {
-            event.reply("Please provide a server address.\n\nUsage: `+ping <server-address>`\n\nExample:\n```\n+ping hypixel.net```");
+            event.reply("Please provide a server address.\n\nUsage: `mc-status <server-address>`\n\nExample:\n```\nmc-status hypixel.net```");
         } else {
             event.reply(new EmbedBuilder().setDescription("Pinging server, please wait...").build(), m -> {
                 ServerStatus status = ServerPinger.ping(event.getArgs());
