@@ -4,7 +4,7 @@ import am.trax.discord.minecraft.command.DiagnosticsCommand;
 import am.trax.discord.minecraft.command.StatusCommand;
 import am.trax.discord.minecraft.command.SupportCommand;
 import am.trax.discord.minecraft.config.Configuration;
-import am.trax.discord.minecraft.trigger.ReactionTrigger;
+import am.trax.discord.minecraft.trigger.RefreshReactionTrigger;
 import com.jagrosh.jdautilities.command.CommandClient;
 import com.jagrosh.jdautilities.command.CommandClientBuilder;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +33,7 @@ public class Bot {
         this.jda = JDABuilder
                 .createDefault(config.getDiscordToken())
                 .addEventListeners(buildCommandClient())
-                .addEventListeners(new ReactionTrigger(this))
+                .addEventListeners(new RefreshReactionTrigger(this))
                 .build();
         log.info("Startup complete!");
     }

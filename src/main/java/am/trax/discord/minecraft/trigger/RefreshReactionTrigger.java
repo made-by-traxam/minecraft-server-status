@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
  * @author traxam
  */
 @Slf4j
-public class ReactionTrigger extends ListenerAdapter {
+public class RefreshReactionTrigger extends ListenerAdapter {
     private static final String REFRESH_EMOJI = "\ud83d\udd04";
 
     private final Bot bot;
@@ -25,7 +25,7 @@ public class ReactionTrigger extends ListenerAdapter {
      * Initializes the reaction trigger listener.
      * @param bot the bot instance.
      */
-    public ReactionTrigger(Bot bot) {
+    public RefreshReactionTrigger(Bot bot) {
         this.bot = bot;
     }
 
