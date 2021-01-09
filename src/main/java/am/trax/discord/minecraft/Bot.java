@@ -1,9 +1,11 @@
 package am.trax.discord.minecraft;
 
 import am.trax.discord.minecraft.command.DiagnosticsCommand;
+import am.trax.discord.minecraft.command.IntroductionCommand;
 import am.trax.discord.minecraft.command.StatusCommand;
 import am.trax.discord.minecraft.command.SupportCommand;
 import am.trax.discord.minecraft.config.Configuration;
+import am.trax.discord.minecraft.trigger.IntroductionMentionTrigger;
 import am.trax.discord.minecraft.trigger.RefreshReactionTrigger;
 import com.jagrosh.jdautilities.command.CommandClient;
 import com.jagrosh.jdautilities.command.CommandClientBuilder;
@@ -34,6 +36,7 @@ public class Bot {
                 .createDefault(config.getDiscordToken())
                 .addEventListeners(buildCommandClient())
                 .addEventListeners(new RefreshReactionTrigger(this))
+                .addEventListeners(new IntroductionMentionTrigger())
                 .build();
         log.info("Startup complete!");
     }
@@ -42,10 +45,12 @@ public class Bot {
         return new CommandClientBuilder()
                 .setActivity(Activity.watching("minecraft servers"))
                 .setPrefix("+")
+                .setHelpWord("commands")
                 .setOwnerId(config.getOwnerId())
                 .addCommand(new DiagnosticsCommand())
                 .addCommand(new StatusCommand())
                 .addCommand(new SupportCommand(this))
+                .addCommand(new IntroductionCommand())
                 .build();
     }
 
