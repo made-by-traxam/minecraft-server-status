@@ -3,6 +3,7 @@ package am.trax.discord.minecraft.trigger;
 import am.trax.discord.minecraft.Bot;
 import am.trax.discord.minecraft.message.StatusMessageFormatter;
 import am.trax.discord.minecraft.ping.ServerPinger;
+import am.trax.discord.minecraft.scheduler.RefreshRunnable;
 import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
@@ -34,15 +35,10 @@ public class RefreshReactionTrigger extends ListenerAdapter {
         if (isRefreshEmoji(event.getReactionEmote())) {
             event.retrieveMessage().queue(message -> {
                 if (StatusMessageFormatter.isStatusMessage(message)) {
-                    refreshServerStatus(message);
+                    new RefreshRunnable(message).run();
                 }
             });
         }
-    }
-
-    private void refreshServerStatus(Message message) {
-        MessageEmbed newEmbed = new StatusMessageFormatter(ServerPinger.ping(message.getEmbeds().get(0).getTitle())).createEmbed();
-        message.editMessage(newEmbed).queue();
     }
 
     private static boolean isRefreshEmoji(MessageReaction.ReactionEmote emote) {

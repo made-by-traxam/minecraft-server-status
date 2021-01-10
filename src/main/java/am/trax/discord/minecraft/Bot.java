@@ -2,6 +2,7 @@ package am.trax.discord.minecraft;
 
 import am.trax.discord.minecraft.command.*;
 import am.trax.discord.minecraft.config.Configuration;
+import am.trax.discord.minecraft.scheduler.RefreshScheduler;
 import am.trax.discord.minecraft.trigger.IntroductionMentionTrigger;
 import am.trax.discord.minecraft.trigger.RefreshReactionTrigger;
 import com.jagrosh.jdautilities.command.CommandClient;
@@ -21,6 +22,7 @@ import javax.security.auth.login.LoginException;
 public class Bot {
     private final Configuration config;
     private final JDA jda;
+    private final RefreshScheduler refreshScheduler;
 
     /**
      * Initializes and starts the discord bot.
@@ -29,6 +31,7 @@ public class Bot {
      */
     public Bot(Configuration config) throws LoginException {
         this.config = config;
+        this.refreshScheduler = new RefreshScheduler();
         this.jda = JDABuilder
                 .createDefault(config.getDiscordToken())
                 .addEventListeners(buildCommandClient())
@@ -46,6 +49,7 @@ public class Bot {
                 .setOwnerId(config.getOwnerId())
                 .addCommand(new DiagnosticsCommand())
                 .addCommand(new StatusCommand())
+                .addCommand(new AutoStatusCommand(refreshScheduler))
                 .addCommand(new SupportCommand(this))
                 .addCommand(new IntroductionCommand())
                 .addCommand(new InviteCommand())
@@ -57,5 +61,13 @@ public class Bot {
      */
     public Configuration getConfig() {
         return config;
+    }
+
+    /**
+     * Shuts down the bot by terminating all tasks.
+     */
+    public void shutdownNow() {
+        jda.shutdownNow();
+        refreshScheduler.shutdownNow();
     }
 }
