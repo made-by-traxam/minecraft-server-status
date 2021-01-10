@@ -1,9 +1,6 @@
 package am.trax.discord.minecraft;
 
-import am.trax.discord.minecraft.command.DiagnosticsCommand;
-import am.trax.discord.minecraft.command.IntroductionCommand;
-import am.trax.discord.minecraft.command.StatusCommand;
-import am.trax.discord.minecraft.command.SupportCommand;
+import am.trax.discord.minecraft.command.*;
 import am.trax.discord.minecraft.config.Configuration;
 import am.trax.discord.minecraft.trigger.IntroductionMentionTrigger;
 import am.trax.discord.minecraft.trigger.RefreshReactionTrigger;
@@ -51,6 +48,7 @@ public class Bot {
                 .addCommand(new StatusCommand())
                 .addCommand(new SupportCommand(this))
                 .addCommand(new IntroductionCommand())
+                .addCommand(new InviteCommand())
                 .build();
     }
 
