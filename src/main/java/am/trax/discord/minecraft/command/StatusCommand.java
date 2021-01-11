@@ -3,6 +3,7 @@ package am.trax.discord.minecraft.command;
 import am.trax.discord.minecraft.message.StatusMessageFormatter;
 import am.trax.discord.minecraft.ping.ServerPinger;
 import am.trax.discord.minecraft.ping.ServerStatus;
+import am.trax.discord.minecraft.util.ExampleServerUtil;
 import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +27,8 @@ public class StatusCommand extends Command {
     @Override
     protected void execute(CommandEvent event) {
         if (event.getArgs().isBlank()) {
-            event.reply("Please provide a server address.\n\nUsage: `mc-status <server-address>`\n\nExample:\n```\nmc-status hypixel.net```");
+            event.reply("Please provide a server address.\n\nUsage: `mc-status <server-address>`\n\n" +
+                    "Example:\n```\nmc-status " + ExampleServerUtil.getRandomExampleServerAddress() + "```");
         } else {
             event.reply(new EmbedBuilder().setDescription("Pinging server, please wait...").build(), m -> {
                 ServerStatus status = ServerPinger.ping(event.getArgs());

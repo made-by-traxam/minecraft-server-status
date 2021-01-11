@@ -4,6 +4,7 @@ import am.trax.discord.minecraft.message.StatusMessageFormatter;
 import am.trax.discord.minecraft.ping.ServerPinger;
 import am.trax.discord.minecraft.ping.ServerStatus;
 import am.trax.discord.minecraft.scheduler.RefreshScheduler;
+import am.trax.discord.minecraft.util.ExampleServerUtil;
 import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +28,7 @@ public class AutoStatusCommand extends Command {
         this.refreshScheduler = refreshScheduler;
         this.name = "auto-status";
         this.help = "shows the status of a minecraft server and keeps refreshing it.";
-        this.aliases = new String[]{"auto-ping"};
+        this.aliases = new String[]{"auto-ping", "autostatus", "autoping"};
         this.guildOnly = false;
         this.arguments = "<server-address>";
     }
@@ -35,7 +36,8 @@ public class AutoStatusCommand extends Command {
     @Override
     protected void execute(CommandEvent event) {
         if (event.getArgs().isBlank()) {
-            event.reply("Please provide a server address.\n\nUsage: `mc-auto-status <server-address>`\n\nExample:\n```\nmc-auto-status hypixel.net```");
+            event.reply("Please provide a server address.\n\nUsage: `mc-auto-status <server-address>`\n\n" +
+                    "Example:\n```\nmc-auto-status " + ExampleServerUtil.getRandomExampleServerAddress() + "```");
         } else {
             event.reply(new EmbedBuilder().setDescription("Pinging server, please wait...").build(), m -> {
                 ServerStatus status = ServerPinger.ping(event.getArgs());

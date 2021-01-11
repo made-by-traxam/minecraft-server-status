@@ -1,5 +1,6 @@
 package am.trax.discord.minecraft.message;
 
+import am.trax.discord.minecraft.util.ExampleServerUtil;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.MessageEmbed;
@@ -23,7 +24,7 @@ public class IntroductoryMessageFormatter {
                 .setDescription("I can show you the online status and more information about your favourite " +
                         "minecraft servers.")
                 .addField("Try me out by sending the following message:",
-                        "```\nmc-status hypixel.net\n```" +
+                        "```\nmc-status " + ExampleServerUtil.getRandomExampleServerAddress() + "\n```" +
                                 "or send `mc-commands` for a complete commands list.",
                         false)
                 .setFooter("made by traxam in twenty-twenty-one",
