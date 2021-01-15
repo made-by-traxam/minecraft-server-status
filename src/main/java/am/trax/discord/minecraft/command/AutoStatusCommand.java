@@ -31,6 +31,7 @@ public class AutoStatusCommand extends Command {
         this.aliases = new String[]{"auto-ping", "autostatus", "autoping"};
         this.guildOnly = false;
         this.arguments = "<server-address>";
+        this.hidden = true;
     }
 
     @Override
