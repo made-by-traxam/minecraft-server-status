@@ -110,4 +110,12 @@ public class ServerStatus {
             return ping.getDescription().getStrippedText();
         }
     }
+
+    /**
+     * Checks whether the server has an icon.
+     * @return {@code true} if the server is online and has an icon, {@code false} otherwise.
+     */
+    public boolean hasIcon() {
+        return isOnline && ping.getFavicon() != null;
+    }
 }

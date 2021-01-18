@@ -88,7 +88,7 @@ public class StatusMessageFormatter {
     }
 
     private String getIconUrl() {
-        if (status.isOnline()) {
+        if (status.hasIcon()) {
             return String.format("https://eu.mc-api.net/v3/server/favicon/%s", status.getAddress());
         } else {
             // default server icon from the Minecraft Wiki: https://minecraft.gamepedia.com/File:Unknown_server.png
